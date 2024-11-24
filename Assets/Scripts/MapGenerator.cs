@@ -24,10 +24,22 @@ public class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i < numeroDeAeropuertos; i++)
         {
-            Vector2 posicionAleatoria = new Vector2(
-                Random.Range(rangoX.x, rangoX.y),
-                Random.Range(rangoY.x, rangoY.y)
-            );
+            Vector2 posicionAleatoria;
+            int intentos = 0; // Para evitar bucles infinitos
+            do
+            {
+                posicionAleatoria = new Vector2(
+                    Random.Range(rangoX.x, rangoX.y),
+                    Random.Range(rangoY.x, rangoY.y)
+                );
+                intentos++;
+                if (intentos > 100) // Si no encuentra una posición válida después de 100 intentos
+                {
+                    Debug.LogWarning("No se encontró una posición válida para un aeropuerto.");
+                    return;
+                }
+            } while (!PosicionEsValida(posicionAleatoria, 1.0f)); // Distancia mínima de 1 unidad
+
             GameObject nuevoAeropuerto = Instantiate(aeropuertoPrefab, posicionAleatoria, Quaternion.identity);
             NodoGrafo nodoAeropuerto = nuevoAeropuerto.AddComponent<NodoGrafo>();
             nodoAeropuerto.nombre = "Aeropuerto" + (i + 1);
@@ -36,14 +48,27 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+
     void GenerarPortaaviones()
     {
         for (int i = 0; i < numeroDePortaaviones; i++)
         {
-            Vector2 posicionAleatoria = new Vector2(
-                Random.Range(rangoX.x, rangoX.y),
-                Random.Range(rangoY.x, rangoY.y)
-            );
+            Vector2 posicionAleatoria;
+            int intentos = 0; // Para evitar bucles infinitos
+            do
+            {
+                posicionAleatoria = new Vector2(
+                    Random.Range(rangoX.x, rangoX.y),
+                    Random.Range(rangoY.x, rangoY.y)
+                );
+                intentos++;
+                if (intentos > 100) // Si no encuentra una posición válida después de 100 intentos
+                {
+                    Debug.LogWarning("No se encontró una posición válida para un portaaviones.");
+                    return;
+                }
+            } while (!PosicionEsValida(posicionAleatoria, 1.0f)); // Distancia mínima de 1 unidad
+
             GameObject nuevoPortaaviones = Instantiate(portaavionesPrefab, posicionAleatoria, Quaternion.identity);
             NodoGrafo nodoPortaaviones = nuevoPortaaviones.AddComponent<NodoGrafo>();
             nodoPortaaviones.nombre = "Portaaviones" + (i + 1);
@@ -51,6 +76,19 @@ public class MapGenerator : MonoBehaviour
             nodos.Add(nodoPortaaviones);
         }
     }
+
+    bool PosicionEsValida(Vector2 posicion, float distanciaMinima)
+    {
+        foreach (NodoGrafo nodo in nodos)
+        {
+            if (Vector2.Distance(posicion, nodo.posicion) < distanciaMinima)
+            {
+                return false; // Hay un nodo demasiado cerca
+            }
+        }
+        return true; // La posición es válida
+    }
+
 
     void GenerarRutas()
     {

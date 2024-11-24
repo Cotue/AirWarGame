@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      AirportSprite-Photoroom_0: -4606625352087926312
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
