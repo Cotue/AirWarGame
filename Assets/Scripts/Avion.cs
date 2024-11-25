@@ -1,9 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Avion : MonoBehaviour
 {
+
+    public string ID { get; private set; }
+    public string Pilot { get; private set; }
+    public string Copilot { get; private set; }
+    public string Maintenance { get; private set; }
+    public string Awareness { get; private set; }
+
+    public Avion(string pilot, string copilot, string maintenance, string awareness)
+    {
+        ID = Guid.NewGuid().ToString(); // Genera un GUID único para cada avión
+        Pilot = pilot;
+        Copilot = copilot;
+        Maintenance = maintenance;
+        Awareness = awareness;
+    }
+    public override string ToString()
+    {
+        return $"ID: {ID}, Pilot: {Pilot}, Copilot: {Copilot}, Maintenance: {Maintenance}, Awareness: {Awareness}";
+    }
+
     public float velocidad = 2.0f; // Velocidad del avión
     public float tiempoEsperaMin = 2.0f; // Tiempo mínimo de espera en destino
     public float tiempoEsperaMax = 5.0f; // Tiempo máximo de espera en destino
@@ -91,7 +112,7 @@ public class Avion : MonoBehaviour
         // Elegir un destino aleatorio
         do
         {
-            destinoActual = destinosFiltrados[Random.Range(0, destinosFiltrados.Count)];
+            destinoActual = destinosFiltrados[UnityEngine.Random.Range(0, destinosFiltrados.Count)];
         } while (destinoActual == null || destinoActual.transform.position == posicionDestino);
 
         posicionDestino = destinoActual.transform.position;
@@ -103,7 +124,7 @@ public class Avion : MonoBehaviour
     private System.Collections.IEnumerator EsperarYElegirNuevoDestino()
     {
         enEspera = true;
-        float tiempoEspera = Random.Range(tiempoEsperaMin, tiempoEsperaMax);
+        float tiempoEspera = UnityEngine.Random.Range(tiempoEsperaMin, tiempoEsperaMax);
         yield return new WaitForSeconds(tiempoEspera);
 
         combustible = 100.0f;
