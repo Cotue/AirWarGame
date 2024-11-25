@@ -14,19 +14,24 @@ public class Bala : MonoBehaviour
 
     void Update()
     {
-        // Mover la bala hacia arriba
+        // Mover la bala hacia arriba (en el eje Y)
         transform.position += Vector3.up * velocidad * Time.deltaTime;
 
         // Desactivar la bala si excede su tiempo de vida
         if (Time.time - tiempoActivada >= tiempoDeVida)
         {
-            DesactivarBala(); // Usar el método para desactivar la bala
+            gameObject.SetActive(false); // En lugar de destruir la bala, la desactivamos
         }
     }
-
-    void DesactivarBala()
+    void OnTriggerEnter2D(Collider2D other) // Cambia a OnTriggerEnter si es 3D
     {
-        gameObject.SetActive(false); // En lugar de destruir la bala, la desactivamos
+        if (other.CompareTag("Avion")) // Asegúrate de que el avión tenga el tag "Avion"
+        {
+            Debug.Log("¡Colisión detectada con un avión!");
+            Destroy(other.gameObject); // Destruye el avión
+            gameObject.SetActive(false); // Desactiva la bala
+        }
     }
 }
+
 
