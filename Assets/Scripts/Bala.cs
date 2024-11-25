@@ -9,7 +9,7 @@ public class Bala : MonoBehaviour
 
     void OnEnable()
     {
-        tiempoActivada = Time.time;
+        tiempoActivada = Time.time; // Registrar el tiempo en que se activa la bala
     }
 
     void Update()
@@ -20,13 +20,13 @@ public class Bala : MonoBehaviour
         // Desactivar la bala si excede su tiempo de vida
         if (Time.time - tiempoActivada >= tiempoDeVida)
         {
-            BalaPool.Instancia.DevolverBala(gameObject);
+            DesactivarBala(); // Usar el método para desactivar la bala
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void DesactivarBala()
     {
-        // Si la bala colisiona con algo, regresa al pool
-        BalaPool.Instancia.DevolverBala(gameObject);
+        gameObject.SetActive(false); // En lugar de destruir la bala, la desactivamos
     }
 }
+

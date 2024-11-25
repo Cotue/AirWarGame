@@ -47,6 +47,10 @@ public class BalaPool : MonoBehaviour
 
     public void DevolverBala(GameObject bala)
     {
-        bala.SetActive(false); // Devuelve la bala al pool
+        if (bala != null)
+        {
+            bala.SetActive(false); // Devuelve la bala al pool desactivándola
+        }
     }
 }
+
