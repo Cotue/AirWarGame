@@ -23,6 +23,7 @@ public class Bala : MonoBehaviour
             gameObject.SetActive(false); // En lugar de destruir la bala, la desactivamos
         }
     }
+    /*
     void OnTriggerEnter2D(Collider2D other) // Cambia a OnTriggerEnter si es 3D
     {
         if (other.CompareTag("Avion")) // Asegúrate de que el avión tenga el tag "Avion"
@@ -32,6 +33,23 @@ public class Bala : MonoBehaviour
             gameObject.SetActive(false); // Desactiva la bala
         }
     }
+    */
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Avion")) // Asegúrate de que el avión tenga el tag "Avion"
+        {
+            Debug.Log("¡Colisión detectada con un avión!");
+            Avion avion = other.GetComponent<Avion>();
+            if (avion != null)
+            {
+                GameManager.Instance.MarcarAvionComoDerribado(avion);
+            }
+            Destroy(other.gameObject); // Destruye el avión
+            // Desactiva la bala después del impacto
+            gameObject.SetActive(false);
+        }
+    }
+
 }
 
 
