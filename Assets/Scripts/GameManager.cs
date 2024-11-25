@@ -32,13 +32,18 @@ public class GameManager : MonoBehaviour
     {
         if (listaDeAviones.Contains(avion))
         {
-            listaDeAviones.Remove(avion);
-            listaDeAvionesDerribados.Add(avion);
-            Debug.Log($"Avión derribado: {avion}");
+            Debug.Log($"Avión derribado:\nID: {avion.ID}\nPilot: {avion.Pilot}\nCopilot: {avion.Copilot}\nMaintenance: {avion.Maintenance}\nAwareness: {avion.Awareness}");
+            listaDeAviones.Remove(avion); // Remover de la lista activa
+            listaDeAvionesDerribados.Add(avion); // Agregar a la lista de derribados
+
+            // Imprimir los datos del avión derribado en la consola
+            
+
         }
 
-        VerificarFinDelJuego();
+        VerificarFinDelJuego(); // Verificar si ya no quedan aviones en juego
     }
+
 
     private void VerificarFinDelJuego()
     {

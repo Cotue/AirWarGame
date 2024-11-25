@@ -43,6 +43,7 @@ public class Bala : MonoBehaviour
             if (avion != null)
             {
                 GameManager.Instance.MarcarAvionComoDerribado(avion);
+                Debug.Log($"Avión derribado:\nID: {avion.ID}\nPilot: {avion.Pilot}\nCopilot: {avion.Copilot}\nMaintenance: {avion.Maintenance}\nAwareness: {avion.Awareness}");
             }
             Destroy(other.gameObject); // Destruye el avión
             // Desactiva la bala después del impacto
