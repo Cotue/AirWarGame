@@ -14,19 +14,15 @@ public class Bala : MonoBehaviour
 
     void Update()
     {
-        // Mover la bala hacia arriba
+        // Mover la bala hacia arriba (en el eje Y)
         transform.position += Vector3.up * velocidad * Time.deltaTime;
 
         // Desactivar la bala si excede su tiempo de vida
         if (Time.time - tiempoActivada >= tiempoDeVida)
         {
-            DesactivarBala(); // Usar el método para desactivar la bala
+            gameObject.SetActive(false); // En lugar de destruir la bala, la desactivamos
         }
     }
-
-    void DesactivarBala()
-    {
-        gameObject.SetActive(false); // En lugar de destruir la bala, la desactivamos
-    }
 }
+
 

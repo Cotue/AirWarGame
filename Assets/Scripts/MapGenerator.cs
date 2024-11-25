@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class MapGenerator : MonoBehaviour
     public Vector2 rangoX = new Vector2(-5, 5);
     public Vector2 rangoY = new Vector2(-5, 5);
 
+    public List<GameObject> aeropuertosInstancias = new List<GameObject>(); // Lista de aeropuertos generados
+    public List<GameObject> portaavionesInstancias = new List<GameObject>(); // Lista de portaaviones generados
+
     private List<NodoGrafo> nodos; // Lista de todos los nodos del grafo
 
     void Start()
@@ -17,6 +21,8 @@ public class MapGenerator : MonoBehaviour
         nodos = new List<NodoGrafo>();
         GenerarAeropuertos();
         GenerarPortaaviones();
+        Debug.Log($"Aeropuertos generados: {aeropuertosInstancias.Count}");
+        Debug.Log($"Portaaviones generados: {portaavionesInstancias.Count}");
         GenerarRutas();
     }
 
@@ -41,9 +47,12 @@ public class MapGenerator : MonoBehaviour
             } while (!PosicionEsValida(posicionAleatoria, 1.0f)); // Distancia mínima de 1 unidad
 
             GameObject nuevoAeropuerto = Instantiate(aeropuertoPrefab, posicionAleatoria, Quaternion.identity);
+            
             NodoGrafo nodoAeropuerto = nuevoAeropuerto.AddComponent<NodoGrafo>();
             nodoAeropuerto.nombre = "Aeropuerto" + (i + 1);
             nodoAeropuerto.posicion = posicionAleatoria;
+            Debug.Log($"Aeropuerto generado en {posicionAleatoria}");
+            aeropuertosInstancias.Add(nuevoAeropuerto); // Agregar a la lista
             nodos.Add(nodoAeropuerto);
         }
     }
@@ -70,9 +79,13 @@ public class MapGenerator : MonoBehaviour
             } while (!PosicionEsValida(posicionAleatoria, 1.0f)); // Distancia mínima de 1 unidad
 
             GameObject nuevoPortaaviones = Instantiate(portaavionesPrefab, posicionAleatoria, Quaternion.identity);
+            
             NodoGrafo nodoPortaaviones = nuevoPortaaviones.AddComponent<NodoGrafo>();
             nodoPortaaviones.nombre = "Portaaviones" + (i + 1);
             nodoPortaaviones.posicion = posicionAleatoria;
+            portaavionesInstancias.Add(nuevoPortaaviones); // Agregar a la lista
+            Debug.Log($"Portaavion generado en {posicionAleatoria}");
+
             nodos.Add(nodoPortaaviones);
         }
     }
